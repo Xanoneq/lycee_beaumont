@@ -1,134 +1,97 @@
 <!doctype html>
-
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Site — En développement</title>
+  <title>Admin Dashboard</title>
   <style>
-    /* Couleurs */
     :root{
-      --bg:#000000;
-      --card:#1c1c1c;
-      --muted:#aaaaaa;
+      --bg:#000;
+      --card:#111;
       --accent:#ff6b6b;
-      --dev-color:#00ffff;
+      --text:#fff;
     }
-
-```
-html, body{
-  margin:0; padding:0; height:100%;
-  font-family:Inter, Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background:var(--bg); color:#fff;
-}
-
-.wrap{
-  min-height:100%; display:flex; flex-direction:column;
-  justify-content:center; align-items:center; padding:32px;
-}
-
-.card{
-  background:var(--card); padding:36px; border-radius:12px;
-  box-shadow:0 6px 30px rgba(255,255,255,0.1); text-align:center;
-  max-width:720px; width:100%;
-}
-
-.dev{
-  font-size:28px; font-weight:600; color:var(--dev-color);
-  text-shadow:0 2px 6px rgba(0,255,255,0.4);
-  animation: zoomPulse 2s ease-in-out infinite; display:inline-block;
-  white-space:normal; word-break:break-word; text-align:center;
-  margin:12px 0;
-}
-@keyframes zoomPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-
-.dots{display:inline-block;margin-left:8px;height:18px;vertical-align:middle;}
-.dots span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:999px;background:var(--accent);animation:dot 1s infinite;}
-.dots span:nth-child(2){animation-delay:0.15s}
-.dots span:nth-child(3){animation-delay:0.3s}
-@keyframes dot{0%{transform:translateY(0);opacity:1}50%{transform:translateY(-6px);opacity:0.6}100%{transform:translateY(0);opacity:1}}
-
-.info{margin:24px 0;font-size:36px;font-weight:800;background:linear-gradient(90deg,#ff6b6b,#feca57,#48dbfb,#1dd1a1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:slideGradient 3s ease infinite;text-align:center;}
-@keyframes slideGradient{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-
-footer{font-size:13px;color:var(--muted);margin-top:24px;text-align:center;}
-
-@media(max-width:520px){.dev{font-size:20px;}.info{font-size:28px;}}
-
-/* Login form */
-.login-form{display:none; flex-direction:column; gap:12px; margin-top:24px; text-align:center;}
-.login-form input{padding:8px 12px; border-radius:6px; border:none; outline:none; width:200px;}
-.login-form button{padding:8px 16px; border:none; border-radius:6px; background:var(--accent); color:#fff; cursor:pointer;}
-
-/* Admin content */
-.admin-content{display:none; margin-top:24px; padding:24px; background:#222; border-radius:12px; text-align:left;}
-.admin-content h2{margin-top:0;}
-.admin-content ul{padding-left:20px;}
-```
-
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial, sans-serif;}
+    .sidebar{
+      width:240px;height:100vh;background:#141414;position:fixed;left:0;top:0;padding:20px;display:flex;flex-direction:column;gap:20px;
+      border-right:2px solid #222;
+    }
+    .sidebar h2{text-align:center;margin:0;font-size:20px;}
+    .sidebar button{
+      padding:12px;border:none;border-radius:8px;background:var(--accent);color:white;cursor:pointer;font-weight:bold;
+    }
+    .content{
+      margin-left:260px;padding:20px;
+    }
+    .card{
+      background:var(--card);padding:20px;border-radius:12px;margin-bottom:20px;
+      box-shadow:0 4px 20px rgba(255,255,255,0.1);
+    }
+    .stats{display:flex;gap:20px;flex-wrap:wrap;}
+    .stat{
+      flex:1;min-width:200px;background:#1c1c1c;padding:20px;border-radius:12px;text-align:center;
+    }
+    table{
+      width:100%;border-collapse:collapse;margin-top:10px;
+    }
+    td,th{
+      border:1px solid #333;padding:8px;text-align:left;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="dev">
-        Site en développement
-        <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+
+  <div class="sidebar">
+    <h2>🔐 Admin</h2>
+    <button onclick="showPage('dashboard')">📊 Dashboard</button>
+    <button onclick="showPage('users')">👥 Utilisateurs</button>
+    <button onclick="showPage('settings')">⚙️ Paramètres</button>
+  </div>
+
+  <div class="content">
+
+    <div id="dashboard" class="page">
+      <h1>Dashboard</h1>
+      <div class="stats">
+        <div class="stat"><h2>124</h2><p>Visiteurs aujourd'hui</p></div>
+        <div class="stat"><h2>57</h2><p>Messages reçus</p></div>
+        <div class="stat"><h2>6</h2><p>Admins actifs</p></div>
       </div>
+    </div>
 
-```
-  <div class="info">Projet 2025-2026</div>
+    <div id="users" class="page" style="display:none;">
+      <h1>Gestion des utilisateurs</h1>
+      <div class="card">
+        <h3>Liste des utilisateurs</h3>
+        <table>
+          <tr><th>ID</th><th>Nom</th><th>Status</th></tr>
+          <tr><td>1</td><td>Mathis</td><td>Admin</td></tr>
+          <tr><td>2</td><td>Alex</td><td>Membre</td></tr>
+          <tr><td>3</td><td>Nora</td><td>Membre</td></tr>
+        </table>
+      </div>
+    </div>
 
-  <!-- Bouton accès admin -->
-  <button id="showLogin" style="padding:8px 16px; margin-top:16px; border:none; border-radius:6px; cursor:pointer; background:var(--accent); color:#fff;">Accès Administrateur</button>
-
-  <!-- Formulaire de login -->
-  <div class="login-form" id="loginForm">
-    <input type="text" id="username" placeholder="Identifiant">
-    <input type="password" id="password" placeholder="Mot de passe">
-    <button onclick="login()">Se connecter</button>
-    <div id="loginError" style="color:#ff4d4d; margin-top:8px;"></div>
-  </div>
-
-  <!-- Contenu admin -->
-  <div class="admin-content" id="adminContent">
-    <h2>Bienvenue Administrateur</h2>
-    <p>Voici des informations et outils réservés aux administrateurs :</p>
-    <ul>
-      <li>📊 Statistiques du site (visiteurs, messages, etc.)</li>
-      <li>📝 Gestion du contenu Projet 2025-2026</li>
-      <li>🔒 Gestion des utilisateurs / accès</li>
-      <li>⚙️ Paramètres et outils de maintenance</li>
-    </ul>
-  </div>
-
-  <footer>© 2025 Projet</footer>
-</div>
-```
+    <div id="settings" class="page" style="display:none;">
+      <h1>Paramètres</h1>
+      <div class="card">
+        <p>Modifier les options du site :</p>
+        <button style="padding:10px 20px;border:none;border-radius:8px;background:var(--accent);color:white;">Mettre à jour</button>
+      </div>
+    </div>
 
   </div>
 
-  <script>
-    const showLoginBtn = document.getElementById('showLogin');
-    const loginForm = document.getElementById('loginForm');
-    const adminContent = document.getElementById('adminContent');
-
-    // Afficher le formulaire de login
-    showLoginBtn.addEventListener('click', ()=> loginForm.style.display = 'flex');
-
-    function login(){
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      // Identifiants administrateur (à personnaliser)
-      if(username === "admin" && password === "motdepasse123"){
-        loginForm.style.display = 'none';
-        adminContent.style.display = 'block';
-      } else {
-        document.getElementById('loginError').textContent = "Identifiant ou mot de passe incorrect";
-      }
-    }
-  </script>
+<script>
+  function showPage(page){
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    document.getElementById(page).style.display = 'block';
+  }
+</script>
 
 </body>
+  <div class="main-content">
+    <h2>Bienvenue sur le panneau d'administration !</h2>
+    <p>Sélectionnez une option dans le menu de gauche.</p>
+  </div>
 </html>
